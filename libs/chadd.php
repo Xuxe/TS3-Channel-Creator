@@ -33,13 +33,13 @@ class chadd
 		
 		public function SetCookie()
 		{
-			setcookie("_ZB_CHADD", true, time()+604800); /* set a cookie for 7 days */
+			setcookie("__CHADD", true, time()+604800); /* set a cookie for 7 days */
 		}
 		
 		
 		public function CheckCookie()
 		{
-			if(@$_COOKIE["_ZB_CHADD"] != true)
+			if(@$_COOKIE["__CHADD"] != true)
 			{
 				return false;
 			}

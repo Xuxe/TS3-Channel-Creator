@@ -141,7 +141,7 @@
           </div>
           <div class="footer-copyright">
             <div class="container">
-            &copy; 2016 by Xuxe for ts3.network
+            &copy; 2016 by Xuxe
             <a class="grey-text text-lighten-4 right" href="#top"><i class="fa fa-2x fa-arrow-up"></i></a>
             </div>
           </div>
