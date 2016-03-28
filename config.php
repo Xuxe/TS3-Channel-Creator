@@ -1,20 +1,24 @@
 <?PHP
-$public = "6LeQdgsTAAAAAERMzSOAyBanh2qCXbEPWWnkBT6L"; 
-$secret = "6LeQdgsTAAAAAGj1ANOstqDXZFEQ-JpMp8HY2TeX"; 
+$public = ""; //Recaptcha Public Key
+$secret = ""; // Recaptcha Privat Key
 
-$ts3_host = "amber.core.julian-huebenthal.de";
+$ts3_host = "localhost";
 $ts3_q_port = "10011";
 $ts3_s_port = "9987";
 $ts3_username = "serveradmin";
 $ts3_password = "";
 $ts3_nick = "Channel Creator V2";
-$cpid = 68; //SPACER ID (the root) on live 248
-$chadmin_group_id = 33; // Default 5
 
-$channel_description = "Falls du deinen eigenen, kostenlosen Channel haben willst, [URL=channelid://4]klicke hier[/URL]\n=> Klicke auf \"Channel erstellen\"\n=> Gib einen Channelnamen und ein Passwort ein\n=> Klicke auf OK!\n\nFalls du aber einen [b]semi-permanenten[/b] Channel haben willst, [URL=http://s.z-b.es/chadd][b]klicke hier[/b][/URL] und erstelle dir bei uns auf der Seite einen Channel.\n\n[B][U]Hinweis:[/U]\n\nSemi-Permanente Channel bleiben bis zum Serverneustart vorhanden, oder bis der Channeldeleter ihn löscht.\nTemporäre Channel löschen sich nachdem der letzte User ihn verlassen hat.\n\nPermanente Channel können jederzeit beim [URL=http://zokkerbude.de/team][b]Team[/b][/URL] angefordert werden.[/B]";
+$cpid = 68; //SPACER ID (the root) 
+$chadmin_group_id = 5; // Channel Admin Group ID Default 5
 
-$server_conn_url = "ts3server://ts.xuxe.ovh";
+$channel_description = "";
+$channel_topic = "CHADD | WebUI @ ".date("H:i:s")." - ".date("d.m.Y");
+$server_conn_url = "ts3server://myip:port";
 
 //BADWORDS will be replaced with XXXX
-$badwords = array("ZB", "Zokkerbude");
+$badwords = array("example", "example");
+
+// Allowed groups whitelist
+$allowed_groups = array();
 ?>

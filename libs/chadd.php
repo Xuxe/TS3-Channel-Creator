@@ -1,10 +1,6 @@
 <?PHP
 class chadd
 {
-		private function GenString($length = 5)
-		{
-			return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
-		}
 
 		public function ReplaceBadString($words, $string)
 		{

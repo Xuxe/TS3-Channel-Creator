@@ -7,7 +7,6 @@
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
       <!--Let browser know website is optimized for mobile-->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -34,6 +33,7 @@
       }
       </style>
       <div id="preloader">
+        <center><h3>Loading...</h3></center>
           <div class="preloader-wrapper preload-center big active">
             <div class="spinner-layer spinner-red-only">
               <div class="circle-clipper left">
@@ -63,8 +63,6 @@
   
   <div class="container">
     <div id="chadd" style="min-height: 600px; padding: 40px;" ng-controller="chadd">
-
-
          <div class="row">
               <div class="row">
                 <div class="col s12 m6">
@@ -78,10 +76,16 @@
                      </div>
                   </div>
                 </div>
-       </div>
+          </div>
 
               <form ng-submit="submit()" class="col s12">
                 <div class="row">
+                <div class="input-field col s12">
+                 <input ng-value="UUID" id="UUID" length="28" ng-model="UUID" name="UUID" type="text" class="validate" ng-disabled="aa" ng-init="aa-false" required>
+                 <label for="UUID">UUID</label>
+                </div>
+              </div>
+
                   <div class="input-field col s6">
                     <input ng-model="cname" length="40" name="cname" type="text" class="validate" required>
                     <label for="cname">Channel Name</label>
@@ -93,7 +97,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                    <select ng-model="codec" name="codec" required>
+                    <select ng-model="codec" id="codec" name="codec" required>
                       <option value="" disabled selected>Choose your option</option>
                       <option value="1">Opus Voice</option>
                       <option value="2">Celt-Mono</option>
@@ -112,7 +116,7 @@
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
-                    <div class="g-recaptcha" data-sitekey="<?PHP echo $public; ?>"></div>
+                  <div class="g-recaptcha" data-sitekey="<?PHP echo $public; ?>"></div>
                   </div>
                 </div>
                 <button type="submit" id="submit" class="waves-effect waves-light btn-large"><i class="material-icons right">send</i>Create</button>
@@ -120,8 +124,7 @@
             </div>
       </div>
   </div>
-        
-  </div>
+
 
     <footer class="page-footer red darken-4">
           <div class="container">

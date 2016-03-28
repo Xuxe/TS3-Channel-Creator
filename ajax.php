@@ -4,8 +4,7 @@ require_once('config.php');
 require_once('libs/recaptcha/src/autoload.php');
 require_once('libs/chadd.php');
 
-
-$request = json_decode(file_get_contents("php://input"));
+$type = @$_GET["type"];
 
 function Response($code, $header, $msg) {
 	$resp = array(
@@ -18,10 +17,17 @@ function Response($code, $header, $msg) {
 	exit;
 }
 
- $recaptcha = new \ReCaptcha\ReCaptcha($secret);
- $resp = $recaptcha->verify($request->captcha_resp, $_SERVER['REMOTE_ADDR']);
+switch($type) {
 
- if($resp->isSuccess()) {
+case 0:
+
+$request = json_decode(file_get_contents("php://input"));
+
+
+$recaptcha = new \ReCaptcha\ReCaptcha($secret);
+$resp = $recaptcha->verify($request->captcha_resp, $_SERVER['REMOTE_ADDR']);
+
+if($resp->isSuccess()) {
 
  	if($chadd->CheckCookie()) 
  	{
@@ -69,11 +75,27 @@ function Response($code, $header, $msg) {
 			$ts3_VirtualServer = TeamSpeak3::factory("serverquery://$ts3_username:$ts3_password@$ts3_host:$ts3_q_port/?server_port=$ts3_s_port");
 			$ts3_VirtualServer->selfUpdate(array('client_nickname'=> $ts3_nick));
 
+			$client = $ts3_VirtualServer->clientGetByUid($request->uuid);
+			$groups = $client["client_servergroups"];
+			$group_matches = 0;
+
+			foreach($allowed_groups as $g)
+			{
+				if(in_array($g, $allowed_groups))
+				{
+					$group_matches++;
+				}
+			}
+
+			if($group_matches <= 0)
+			{
+				Response(403, "Not Authorized", "Not allowed to use this tool, you are not in a whitelisted group.");
+			}
 
 			$cid = $ts3_VirtualServer->channelCreate(array(
 			"channel_name" => $request->channelname,
 			"channel_password" => $request->password,
-			"channel_topic" => "ZB | WebUI @ ".date("H:i:s")." - ".date("d.m.Y"),
+			"channel_topic" => $channel_topic,
 			"channel_codec" => TS3_CODEC,
 			"channel_codec_quality" => $request->quality,
 			"channel_flag_permanent" => FALSE,
@@ -87,7 +109,7 @@ function Response($code, $header, $msg) {
 			$ts3_VirtualServer->logAdd("Channel $cid created from IP:$usr_ip", TeamSpeak3::LOGLEVEL_INFO);
 
 		
-			$token = $ts3_VirtualServer->privilegeKeyCreate(0x01, "$chadmin_group_id"  ,"$cid", "TOKEN VIA ZBUI : $usr_ip");
+			$token = $ts3_VirtualServer->privilegeKeyCreate(0x01, "$chadmin_group_id"  ,"$cid", "TOKEN created from CHADD.");
 
 			$chadd->SetCookie();
 
@@ -111,10 +133,59 @@ function Response($code, $header, $msg) {
 			}
 
 
- } else {
+} else {
  	$errors = $resp->getErrorCodes();
+ 	if(count($errors) >= 1)
+ 	{
  	Response(403, "Error :(", $errors[0]);
- }
+ 	}
+}
 
+break;
 
+case 1:
+
+try {
+		 $ts3_VirtualServer = TeamSpeak3::factory("serverquery://$ts3_username:$ts3_password@$ts3_host:$ts3_q_port/?server_port=$ts3_s_port");
+		 $ts3_VirtualServer->selfUpdate(array('client_nickname'=> $ts3_nick));
+		 $clients = $ts3_VirtualServer->clientList(array('connection_client_ip' => "84.141.113.189"/*$_SERVER["REMOTE_ADDR"]*/));
+
+		 $matches = count($clients);
+		 if($matches > 1 || $matches <= 0)
+		 {
+		 	Response(404, "Client not found.", "Could not determine your Unique ID. Enter your Unique ID.");
+		 }
+
+		 if($matches == 1)
+		 {
+			 foreach($clients as $c)
+			 {
+
+			 if(count($c->getClones()) > 1)
+			 {
+			 	Response(404, "Client not found.", "Could not determine your Unique ID. Enter your Unique ID.");
+			 }
+
+			 $resp = array(
+			 	"code" => 200,
+			 	"header" => "Authenticated",
+			 	"uuid" => (string)$c["client_unique_identifier"],
+			 	"name" => (string)$c["client_nickname"],
+			 );
+
+			 $json = json_encode($resp);
+			 echo $json;
+			 exit;
+
+			}
+		}
+	 
+}
+catch (TeamSpeak3_Exception $e) {
+		  Response(500, "TS3-Error: "+ $e->getCode(), $e->getMessage());
+}
+
+break;
+
+}
 ?>
