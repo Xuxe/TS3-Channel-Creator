@@ -148,7 +148,7 @@ case 1:
 try {
 		 $ts3_VirtualServer = TeamSpeak3::factory("serverquery://$ts3_username:$ts3_password@$ts3_host:$ts3_q_port/?server_port=$ts3_s_port");
 		 $ts3_VirtualServer->selfUpdate(array('client_nickname'=> $ts3_nick));
-		 $clients = $ts3_VirtualServer->clientList(array('connection_client_ip' => "84.141.113.189"/*$_SERVER["REMOTE_ADDR"]*/));
+		 $clients = $ts3_VirtualServer->clientList(array('connection_client_ip' => $_SERVER["REMOTE_ADDR"]));
 
 		 $matches = count($clients);
 		 if($matches > 1 || $matches <= 0)
