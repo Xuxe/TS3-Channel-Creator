@@ -2,7 +2,7 @@
 <!DOCTYPE html>
   <html ng-app="chadd">
     <head>
-      <title>ZB-Channelcreator V2</title>
+      <title>Channelcreator V2</title>
       <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
@@ -137,14 +137,14 @@
               <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Links</h5>
                 <ul>
-                  <li><a class="grey-text text-lighten-3" href="http://zokkerbude.de/impressum">Impressum</a></li>
+                  <li><a class="grey-text text-lighten-3" href="<?PHP echo $imprint_url; ?>">Impressum</a></li>
                 </ul>
               </div>
             </div>
           </div>
           <div class="footer-copyright">
             <div class="container">
-            &copy; 2016 by Xuxe
+            &copy; 2016 by <a class="grey-text text-lighten-3" href="http://julian-huebenthal.de">Xuxe</a>
             <a class="grey-text text-lighten-4 right" href="#top"><i class="fa fa-2x fa-arrow-up"></i></a>
             </div>
           </div>
