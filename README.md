@@ -10,7 +10,7 @@
 #### Used Librarys:
         - Angular JS
         - Teamspeak 3 PHP Framework (https://www.planetteamspeak.com/)
-        - Google Recaptca (https://github.com/google/recaptcha)
+        - Google Recaptcha (https://github.com/google/recaptcha)
         - Materialize CSS (http://materializecss.com/)
         
 ## NOTE
